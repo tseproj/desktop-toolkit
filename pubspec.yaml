@@ -1,5 +1,5 @@
-name: tencent_qq_plugin_manager
-description: Fuck Pony Ma and Tencent, fuck Great Firewall.
+name: desktop_toolkit
+description: Fuck Great Firewall.
 publish_to: 'none'
 version: 0.1.0
 
@@ -10,11 +10,24 @@ dependencies:
   flutter:
     sdk: flutter
   fluent_ui: ^4.10.0
+  json_annotation: ^4.9.0
+  file_picker: ^8.3.1
+  path_provider: ^2.1.5
+  path: ^1.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
+  json_serializable: ^6.9.3
+  build_runner: ^2.4.14
+
+build_runner:
+  targets:
+    - name: desktop_toolkit
+      module: package:desktop_toolkit/main.dart
+      output: lib/main.g.dart
+
 
 flutter:
   uses-material-design: true
