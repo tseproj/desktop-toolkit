@@ -1,20 +1,22 @@
-import 'package:flutter/material.dart';
+import 'package:desktop_toolkit/pages/plugin_manager.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const DesktopToolkitApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class DesktopToolkitApp extends StatelessWidget {
+  const DesktopToolkitApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return FluentApp(
+      title: 'Li\'s Desktop Toolkit',
+      theme: FluentThemeData(
+        brightness: Brightness.light,
+        accentColor: Colors.teal,
       ),
+      home: const QQNTPluginManagerPage(),
     );
   }
 }
