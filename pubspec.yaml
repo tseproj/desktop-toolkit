@@ -10,10 +10,12 @@ dependencies:
   flutter:
     sdk: flutter
   fluent_ui: ^4.10.0
+  fluentui_system_icons: ^1.1.273
   json_annotation: ^4.9.0
   file_picker: ^8.3.1
   path_provider: ^2.1.5
   path: ^1.9.0
+  window_manager: ^0.4.3
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart' as fi;
 import 'package:desktop_toolkit/models/config.dart';
 import 'package:desktop_toolkit/services/config.dart';
 
@@ -67,9 +68,6 @@ class _QQNTPluginManagerPageState extends State<QQNTPluginManagerPage> {
     }
 
     return NavigationView(
-      appBar: const NavigationAppBar(
-        title: Text('QQNT Plugin Manager'),
-      ),
       content: ScaffoldPage(
         header: const PageHeader(
           title: Text('QQNT Plugin Manager'),
@@ -88,69 +86,85 @@ class _QQNTPluginManagerPageState extends State<QQNTPluginManagerPage> {
                 content: const Text('Enable Plugin'),
               ),
               const SizedBox(height: 20),
-              InfoLabel(
-                label: 'QQNT Path',
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextBox(
-                        placeholder: 'Select QQNT installation path',
-                        controller:
-                            TextEditingController(text: _config?.qqPath ?? ''),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Button(
-                      child: const Text('Choose'),
-                      onPressed: () => _pickDirectory(true),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-              InfoLabel(
-                label: 'Plugin Path',
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextBox(
-                        placeholder: 'Select plugin path',
-                        controller: TextEditingController(
-                            text: _config?.pluginPath ?? ''),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Button(
-                      child: const Text('Choose'),
-                      onPressed: () => _pickDirectory(false),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-              if (_versionPath != null) ...[
-                InfoLabel(
-                  label: 'Detected Version Path',
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextBox(
-                          controller:
-                              TextEditingController(text: _versionPath!),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Button(
-                        child: const Text('Choose'),
-                        onPressed: () => _pickDirectory(false),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              _Settings(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _Settings() {
+    return Expander(
+      header: Row(
+        children: [
+          const Icon(fi.FluentIcons.folder_16_regular),
+          const SizedBox(width: 10),
+          const Text('Path Settings'),
+        ],
+      ),
+      content: Column(
+        children: [
+          InfoLabel(
+            label: 'QQNT Path',
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextBox(
+                    placeholder: 'Select QQNT installation path',
+                    controller:
+                        TextEditingController(text: _config?.qqPath ?? ''),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Button(
+                  child: const Text('Choose'),
+                  onPressed: () => _pickDirectory(true),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          InfoLabel(
+            label: 'Plugin Path',
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextBox(
+                    placeholder: 'Select plugin path',
+                    controller:
+                        TextEditingController(text: _config?.pluginPath ?? ''),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Button(
+                  child: const Text('Choose'),
+                  onPressed: () => _pickDirectory(false),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          if (_versionPath != null) ...[
+            InfoLabel(
+              label: 'Detected Version Path',
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextBox(
+                      controller: TextEditingController(text: _versionPath!),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Button(
+                    child: const Text('Choose'),
+                    onPressed: () => _pickDirectory(false),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }
