@@ -3,7 +3,6 @@ import 'package:window_manager/window_manager.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart' as fi;
 
 import 'package:desktop_toolkit/pages/plugin_manager.dart';
-import 'package:desktop_toolkit/components/layout/window_controller.dart';
 
 class NavigationSidebar extends StatelessWidget {
   final int selectedIndex;
@@ -29,7 +28,7 @@ class NavigationSidebar extends StatelessWidget {
         leading: null,
         automaticallyImplyLeading: false,
         title: _title(context),
-        actions: WindowButtons(),
+        actions: WindowActions(),
       ),
       pane: NavigationPane(
         selected: selectedIndex,
@@ -44,5 +43,25 @@ class NavigationSidebar extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class WindowActions extends StatelessWidget {
+  const WindowActions({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final FluentThemeData theme = FluentTheme.of(context);
+
+    return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+      SizedBox(
+        width: 138,
+        height: 50,
+        child: WindowCaption(
+          brightness: theme.brightness,
+          backgroundColor: Colors.transparent,
+        ),
+      ),
+    ]);
   }
 }

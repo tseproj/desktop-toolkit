@@ -1,4 +1,4 @@
-import 'package:desktop_toolkit/components/layout/navbar.dart';
+import 'package:desktop_toolkit/components/layouts/navbar.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class App extends StatelessWidget {

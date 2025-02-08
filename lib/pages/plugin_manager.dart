@@ -1,7 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart' as fi;
+
 import 'package:desktop_toolkit/models/config.dart';
-import 'package:desktop_toolkit/services/config.dart';
+import 'package:desktop_toolkit/utils/config.dart';
+import 'package:desktop_toolkit/utils/plugin_manager.dart';
 
 class QQNTPluginManagerPage extends StatefulWidget {
   const QQNTPluginManagerPage({super.key});
@@ -11,7 +13,7 @@ class QQNTPluginManagerPage extends StatefulWidget {
 }
 
 class _QQNTPluginManagerPageState extends State<QQNTPluginManagerPage> {
-  Config? _config;
+  PluginManagerConfig? _config;
   String? _versionPath;
   bool _loading = true;
 
@@ -22,9 +24,9 @@ class _QQNTPluginManagerPageState extends State<QQNTPluginManagerPage> {
   }
 
   Future<void> _loadConfig() async {
-    final config = await ConfigService.loadConfig();
+    final config = await ConfigUtil.loadConfig();
     final versionPath = config.qqPath != null
-        ? await ConfigService.autoDetectQQVersionPath(config.qqPath!)
+        ? await PluginManagerUtil.autoDetectQQVersionPath(config.qqPath!)
         : null;
 
     setState(() {
@@ -35,18 +37,19 @@ class _QQNTPluginManagerPageState extends State<QQNTPluginManagerPage> {
     });
 
     if (_config != null) {
-      await ConfigService.saveConfig(_config!);
+      await ConfigUtil.saveConfig(_config!);
     }
   }
 
   Future<void> _pickDirectory(bool isQQPath) async {
-    final path = await ConfigService.pickDirectory();
+    final path = await ConfigUtil.pickDirectory();
     if (path == null) return;
 
     if (isQQPath) {
-      final versionPath = await ConfigService.autoDetectQQVersionPath(path);
+      final versionPath = await PluginManagerUtil.autoDetectQQVersionPath(path);
       setState(() {
         _config?.qqPath = path;
+
         _versionPath = versionPath;
         _config?.versionPath = versionPath;
       });
@@ -57,7 +60,7 @@ class _QQNTPluginManagerPageState extends State<QQNTPluginManagerPage> {
     }
 
     if (_config != null) {
-      await ConfigService.saveConfig(_config!);
+      await ConfigUtil.saveConfig(_config!);
     }
   }
 
@@ -86,7 +89,7 @@ class _QQNTPluginManagerPageState extends State<QQNTPluginManagerPage> {
                 content: const Text('Enable Plugin'),
               ),
               const SizedBox(height: 20),
-              _Settings(),
+              settings(),
             ],
           ),
         ),
@@ -94,7 +97,7 @@ class _QQNTPluginManagerPageState extends State<QQNTPluginManagerPage> {
     );
   }
 
-  Widget _Settings() {
+  Widget settings() {
     return Expander(
       header: Row(
         children: [
@@ -176,11 +179,12 @@ class _QQNTPluginManagerPageState extends State<QQNTPluginManagerPage> {
       return;
     }
 
-    await ConfigService.updatePluginState(
+    await PluginManagerUtil.updatePluginState(
         _versionPath!, value, _config!.pluginPath!);
     setState(() {
       _config!.isEnabled = value;
     });
-    await ConfigService.saveConfig(_config!);
+
+    await ConfigUtil.saveConfig(_config!);
   }
 }
